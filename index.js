@@ -1,16 +1,12 @@
 const {pool} = require("./utils/db");
 const {TodoRecord} = require("./records/todo.record");
 
-
 (async () => {
 
-    const firstTodoItem = new TodoRecord({
-        title: 'Zrobić dzień 5, Tydzien 4'
-    });
-    const newId = await firstTodoItem.insert();
-    console.log('New todo item added with ID', newId);
+    const foundTodo = await TodoRecord.find('');
+    await foundTodo.delete()
 
-    await firstTodoItem.delete();
+    console.log(foundTodo);
 
     await pool.end();
 })();

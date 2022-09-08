@@ -14,12 +14,23 @@ class TodoRecord {
         this.title = obj.title;
     }
 
+    _validatew() {
+
+    }
     async insert() {
         this.id = this.id ?? uuid();
 
         await pool.execute('INSERT INTO `todos` VALUES(:id, :title)', {
             id: this.id,
             title: this.title,
+        });
+        return this.id;
+    }
+
+        async update() {
+        await pool.execute('UPADATE `todos` SET `title` = :title WHERE `id` = :id', {
+            title: this.title,
+            id: this.id,
         });
         return this.id;
     }
@@ -34,9 +45,10 @@ class TodoRecord {
         });
     }
     static async find(id) {
-        pool.execute('SELECT * FROM `todos` WHERE `id` = :id',{
+        const [results] = await pool.execute('SELECT * FROM `todos` WHERE `id` = :id',{
             id: id,
         });
+        return new TodoRecord(results[0]);
     }
 }
 
