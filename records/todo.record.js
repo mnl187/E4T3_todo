@@ -1,5 +1,5 @@
 const {pool} = require("../utils/db");
-const{v4: uuid} = require('uuid');
+const {v4: uuid} = require('uuid');
 
 class TodoRecord {
     constructor(obj) {
@@ -31,6 +31,11 @@ class TodoRecord {
 
         await pool.execute('DELETE FROM `todos` WHERE `id` = :id', {
             id: this.id,
+        });
+    }
+    static async find(id) {
+        pool.execute('SELECT * FROM `todos` WHERE `id` = :id',{
+            id: id,
         });
     }
 }
