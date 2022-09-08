@@ -41,10 +41,12 @@ class TodoRepository {
     }
 
     static async findAll() {
-        // ...
-    }
+        const [results] = await pool.execute('SELECT * FROM `todos`)
+        return results
+    };
 
-    static update() {
+
+    static async update() {
         if (!this.id) {
             throw new Error('Todo has no ID');
         }
