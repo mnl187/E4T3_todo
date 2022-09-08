@@ -5,9 +5,9 @@ const {TodoRepository} = require("./repositories/todo.repository");
 
     const foundTodo = await TodoRepository.find('');
     foundTodo.title = 'Siaiaalal';
-    await TodoRepository.delete(foundTodo);
+    await TodoRepository.update(foundTodo);
 
-    console.log(foundTodo);
+    console.log(await TodoRepository.findAll());
 
     await pool.end();
 })();
