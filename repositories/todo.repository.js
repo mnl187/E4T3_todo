@@ -41,26 +41,23 @@ class TodoRepository {
     }
 
     static async findAll() {
-        const [results] = await pool.execute('SELECT * FROM `todos`)
-        return results
+        const [results] = await pool.execute('SELECT * FROM `todos`')
+        return results.map(result => new TodoRecord(result));
     };
 
 
-    static async update() {
-        if (!this.id) {
+    static async update(record) {
+        TodoRepository._checkRecord(record);
+
+        if (!record.id) {
             throw new Error('Todo has no ID');
         }
-        this._validate();
+        record._validate();
 
         await pool.execute('UPADATE `todos` SET `title` = :title WHERE `id` = :id', {
-            title: this.title,
-            id: this.id,
+            title: record.title,
+            id: record.id,
         });
-        return this.id;
-    }
-
-    _validate() {
-
     }
 }
 

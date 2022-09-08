@@ -1,10 +1,11 @@
 const {pool} = require("./utils/db");
-const {TodoRecord} = require("./records/todo.record");
+const {TodoRepository} = require("./repositories/todo.repository");
 
 (async () => {
 
-    const foundTodo = await TodoRecord.find('');
-    await foundTodo.delete()
+    const foundTodo = await TodoRepository.find('');
+    foundTodo.title = 'Siaiaalal';
+    await TodoRepository.delete(foundTodo);
 
     console.log(foundTodo);
 
